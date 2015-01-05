@@ -11,7 +11,7 @@ my %nodes;
 
 foreach my $co_occurence (@data) { 
 	$co_occurence =~ s/\n//;
-	my @line = split(/:::/, $co_occurence);
+	my @line = split(/\t/, $co_occurence);
 
 
 	if ( exists $nodes{$line[0]} ) { 
@@ -52,8 +52,8 @@ foreach my $link (@data) {
 
 # remove the asymmetry between connections 
 while (my($key, $value) = each(%connections)) {
-	my @co_oc = split(/:::/, $key);
-	my $undir = $co_oc[1].":::".$co_oc[0];
+	my @co_oc = split(/\t/, $key);
+	my $undir = $co_oc[1]."\t".$co_oc[0];
 	if ( exists $connections{$undir} ) { 
 		delete $connections{$undir};
 	}
@@ -64,7 +64,7 @@ while (my($key, $value) = each(%connections)) {
 # print them
 print "*Edges\n";
 while (my($key, $value) = each(%connections)){
-	my @co_oc = split(/:::/, $key); 
+	my @co_oc = split(/\t/, $key); 
 	print $nodes{$co_oc[0]} . " " . $nodes{$co_oc[1]} . " " . $connections{$key}."\n"; 		
 }
 
